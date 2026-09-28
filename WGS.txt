@@ -1,0 +1,20 @@
+#### conda installation
+wget -c https://repo.anaconda.com/miniconda/Miniconda3-py39_22.11.1-1-Linux-x86_64.sh
+
+/sibcb1/chenfeilab1/chenfei-lab/Luz/softwares/miniconda3/bin/conda
+
+/sibcb1/chenfeilab1/chenfei-lab/Luz/softwares/miniconda3/bin/conda create --name WGS python=3.8
+
+
+source /sibcb1/chenfeilab1/chenfei-lab/Luz/softwares/miniconda3/bin/activate
+conda activate WGS
+
+## base environment
+conda install mamba -c conda-forge
+
+mamba install bioconda::nextflow
+
+mamba install conda-forge:openjdk=17
+
+
+git clone https://github.com/nf-core/sarek.git
