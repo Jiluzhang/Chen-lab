@@ -30,3 +30,5 @@ unset PERL_MM_OPT
 
 Can't stage file s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Sequence/BWAIndex 
 -- reason: Some transfers from S3 download directory: s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Sequence/BWAIndex failed
+
+## Sarek github: https://github.com/nf-core/sarek
