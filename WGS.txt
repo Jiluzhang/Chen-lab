@@ -19,5 +19,6 @@ mamba install conda-forge:openjdk=17
 
 git clone https://github.com/nf-core/sarek.git
 
-nextflow run sarek -profile conda --input samplesheet.csv --outdir ./res_out
-# 60813
+nextflow run sarek -profile mamba --input samplesheet.csv --outdir ./res_out -resume
+
+mamba install conda-forge::perl=5.44.0  # not use channel of anaconda
