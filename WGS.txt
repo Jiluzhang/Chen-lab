@@ -52,14 +52,19 @@ mamba env create -v --yes --prefix /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek
 mamba create -v --prefix /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-de2faf51ad8e272ab983d28e15ffd609 \
                 --clone /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/test
 
+mamba env create -v --yes --prefix /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4 \
+                 --file /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek/modules/nf-core/gatk4/baserecalibrator/environment.yml
+
 rsync -a --delete ./empty/ ./lib
 
 
 ps -u chenfei-lab -o pid,ppid,nlwp,stat,etime,args
 
 
-$nohup nextflow run ./sarek -profile mamba --input samplesheet.csv --outdir ./res_out -work-dir ./sarek_work -resume > 20260930.log &
-[1] 13416
+nextflow run ./sarek -profile mamba --input samplesheet.csv --outdir ./res_out -work-dir ./sarek_work \
+                     --tools haplotypecaller --skip_tools haplotypecaller_filter -resume -process.cpus 8
+# --skip_tools haplotypecaller_filter is for ignore cnnvariantscore which does not fit for conda
+
 
 
 ## limit running thread
