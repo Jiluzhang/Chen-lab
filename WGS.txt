@@ -32,3 +32,50 @@ Can't stage file s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Sequence/BW
 -- reason: Some transfers from S3 download directory: s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Sequence/BWAIndex failed
 
 ## Sarek github: https://github.com/nf-core/sarek
+
+## Pipeline testing
+git clone https://github.com/nf-core/demo.git
+
+unset PERL5LIB
+unset PERL_LOCAL_LIB_ROOT
+unset PERL_MB_OPT
+unset PERL_MM_OPT
+
+nextflow run ./demo -profile test,mamba --outdir demo_out -work-dir ./demo_work  # √
+
+nextflow run ./demo -profile mamba --input samplesheet.csv --outdir test_out -work-dir ./demo_work
+
+nextflow run ./sarek -profile mamba --input samplesheet.csv --outdir ./res_out -work-dir ./sarek_work -resume
+
+mamba env create -v --yes --prefix /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/test --file /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek/modules/nf-core/gatk4/markduplicates/environment.yml 
+
+mamba create -v --prefix /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-de2faf51ad8e272ab983d28e15ffd609 \
+                --clone /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/test
+
+rsync -a --delete ./empty/ ./lib
+
+
+ps -u chenfei-lab -o pid,ppid,nlwp,stat,etime,args
+
+
+$nohup nextflow run ./sarek -profile mamba --input samplesheet.csv --outdir ./res_out -work-dir ./sarek_work -resume > 20260930.log &
+[1] 13416
+
+
+## limit running thread
+## set local genome reference
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
