@@ -60,6 +60,7 @@ rsync -a --delete ./empty/ ./lib
 
 ps -u chenfei-lab -o pid,ppid,nlwp,stat,etime,args
 
+ls -R  # list all dirs & files
 
 nextflow run ./sarek -profile mamba --input samplesheet.csv --outdir ./res_out -work-dir ./sarek_work \
                      --tools haplotypecaller --skip_tools haplotypecaller_filter -resume -process.cpus 8
@@ -69,6 +70,39 @@ nextflow run ./sarek -profile mamba --input samplesheet.csv --outdir ./res_out -
 
 ## limit running thread
 ## set local genome reference
+
+
+unset PERL5LIB
+unset PERL_LOCAL_LIB_ROOT
+unset PERL_MB_OPT
+unset PERL_MM_OPT
+
+nextflow run ./sarek -profile mamba --input samplesheet.csv --outdir ./res_out_2 -work-dir ./sarek_work \
+                     --fasta /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta \
+                     --fasta_fai /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta.fai \
+                     --bwa /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/BWAIndex \
+                     --dbsnp /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/dbsnp/dbsnp_146.hg38.vcf.gz \
+                     --dbsnp_tbi /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/dbsnp/dbsnp_146.hg38.vcf.gz.tbi \
+                     --known_indels /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/indel/Homo_sapiens_assembly38.known_indels.vcf.gz \
+                     --known_indels_tbi /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/indel/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi \
+                     --dict /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/Homo_sapiens_assembly38.dict \
+                     --known_indels_vqsr /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz \
+                     --intervals /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/wgs_calling_regions_noseconds.hg38.bed \
+                     --tools haplotypecaller --skip_tools haplotypecaller_filter -resume
+
+
+
+Reference genome options
+  --bwa                               [string]  Path to BWA mem indices. 
+  --bwamem2                           [string]  Path to bwa-mem2 mem indices. 
+  --fasta                             [string]  Path to FASTA genome file. 
+  --fasta_fai                         [string]  Path to FASTA reference index. 
+  --vep_genome                        [string]  VEP genome. 
+
+
+
+
+Staging foreign file: s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz
 
 
 
