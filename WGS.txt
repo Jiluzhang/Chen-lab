@@ -109,9 +109,8 @@ nextflow run ./sarek -profile mamba --input samplesheet_1.csv --outdir ./sample_
 
 qsub -N luz_wgs_1 -q b1.q -l hostname=fnode009 -cwd sample_1.sh  
 
-
-# 79792
-
+qsub -N luz_wgs_2 -q b1.q -l hostname=fnode009 -cwd sample_2.sh 
+# 5338081
 
 
 Reference genome options
