@@ -108,9 +108,8 @@ nextflow run ./sarek -profile mamba --input samplesheet_1.csv --outdir ./sample_
 # nohup ./sample_1.sh > sample_1.log &  # not work
 
 qsub -N luz_wgs_1 -q b1.q -l hostname=fnode009 -cwd sample_1.sh  
-
 qsub -N luz_wgs_2 -q b1.q -l hostname=fnode009 -cwd sample_2.sh 
-# 5338081
+qsub -N luz_wgs_3 -q b1.q -l hostname=fnode009 -cwd sample_3.sh   # 5338773
 
 
 Reference genome options
