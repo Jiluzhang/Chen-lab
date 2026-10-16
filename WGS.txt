@@ -184,10 +184,33 @@ Core Nextflow options
 
 
 
+##INFO=<ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes, for each ALT allele, in the same order as listed">
+##INFO=<ID=AF,Number=A,Type=Float,Description="Allele Frequency, for each ALT allele, in the same order as listed">
+##INFO=<ID=AN,Number=1,Type=Integer,Description="Total number of alleles in called genotypes">
+##INFO=<ID=BaseQRankSum,Number=1,Type=Float,Description="Z-score from Wilcoxon rank sum test of Alt Vs. Ref base qualities">
+##INFO=<ID=DB,Number=0,Type=Flag,Description="dbSNP Membership">
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Approximate read depth; some reads may have been filtered">
+##INFO=<ID=ExcessHet,Number=1,Type=Float,Description="Phred-scaled p-value for exact test of excess heterozygosity">
+##INFO=<ID=FS,Number=1,Type=Float,Description="Phred-scaled p-value using Fisher's exact test to detect strand bias">
+##INFO=<ID=InbreedingCoeff,Number=1,Type=Float,Description="Inbreeding coefficient as estimated from the genotype likelihoods per-sample when compared against the Hardy-Weinberg expectation">
+##INFO=<ID=MLEAC,Number=A,Type=Integer,Description="Maximum likelihood expectation (MLE) for the allele counts (not necessarily the same as the AC), for each ALT allele, in the same order as listed">
+##INFO=<ID=MLEAF,Number=A,Type=Float,Description="Maximum likelihood expectation (MLE) for the allele frequency (not necessarily the same as the AF), for each ALT allele, in the same order as listed">
+##INFO=<ID=MQ,Number=1,Type=Float,Description="RMS Mapping Quality">
+##INFO=<ID=MQRankSum,Number=1,Type=Float,Description="Z-score From Wilcoxon rank sum test of Alt vs. Ref read mapping qualities">
+##INFO=<ID=QD,Number=1,Type=Float,Description="Variant Confidence/Quality by Depth">
+##INFO=<ID=ReadPosRankSum,Number=1,Type=Float,Description="Z-score from Wilcoxon rank sum test of Alt vs. Ref read position bias">
+##INFO=<ID=SOR,Number=1,Type=Float,Description="Symmetric Odds Ratio of 2x2 contingency table to detect strand bias">
 
 
-
-
+#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  P1_S1
+chr1    10144   .       T       C       66.64   .       AC=1;AF=0.500;AN=2;BaseQRankSum=0.000;DP=17;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=35.30;MQRankSum=0.439;QD=8.33;ReadPosRankSum=0.732;SOR=0.818       GT:AD:DP:GQ:PL  0/1:5,3:8:74:74,0,131
+chr1    10146   rs779258992     AC      A       91.60   .       AC=1;AF=0.500;AN=2;BaseQRankSum=0.000;DB;DP=17;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=35.30;MQRankSum=-0.439;QD=11.45;ReadPosRankSum=-0.732;SOR=0.582 GT:AD:DP:GQ:PL  0/1:3,5:8:99:99,0,112
+chr1    10172   .       CCCTAA  C       47.60   .       AC=1;AF=0.500;AN=2;BaseQRankSum=1.834;DP=15;ExcessHet=0.0000;FS=3.310;MLEAC=1;MLEAF=0.500;MQ=37.60;MQRankSum=0.000;QD=7.93;ReadPosRankSum=1.282;SOR=2.303       GT:AD:DP:GQ:PL  0/1:4,2:6:55:55,0,105
+chr1    13595   .       A       G       32.64   .       AC=1;AF=0.500;AN=2;BaseQRankSum=0.684;DP=14;ExcessHet=0.0000;FS=7.160;MLEAC=1;MLEAF=0.500;MQ=26.46;MQRankSum=-1.283;QD=2.33;ReadPosRankSum=-0.857;SOR=2.797     GT:AD:DP:GQ:PL  0/1:11,3:14:40:40,0,291
+chr1    13613   .       T       A       56.64   .       AC=1;AF=0.500;AN=2;BaseQRankSum=-0.216;DP=15;ExcessHet=0.0000;FS=15.911;MLEAC=1;MLEAF=0.500;MQ=26.30;MQRankSum=-2.078;QD=3.78;ReadPosRankSum=1.504;SOR=3.227    GT:AD:DP:GQ:PL  0/1:11,4:15:64:64,0,291
+chr1    13684   rs71260404      C       T       37.64   .       AC=1;AF=0.500;AN=2;BaseQRankSum=2.000;DB;DP=13;ExcessHet=0.0000;FS=3.090;MLEAC=1;MLEAF=0.500;MQ=23.50;MQRankSum=-1.855;QD=3.14;ReadPosRankSum=-0.794;SOR=2.494  GT:AD:DP:GQ:PL  0/1:9,3:12:45:45,0,222
+chr1    13813   .       T       G       51.64   .       AC=1;AF=0.500;AN=2;BaseQRankSum=-1.282;DP=8;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=23.14;MQRankSum=-0.854;QD=6.45;ReadPosRankSum=-1.006;SOR=0.368     GT:AD:DP:GQ:PL  0/1:5,3:8:59:59,0,95
+chr1    13838   rs28428499      C       T       192.67  .       AC=1;AF=0.500;AN=2;BaseQRankSum=1.221;DB;DP=9;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=23.02;MQRankSum=-2.200;QD=21.41;ReadPosRankSum=-0.549;SOR=2.093  GT:AD:DP:GQ:PL  0/1:2,7:9:12:200,0,12
 
 
 
