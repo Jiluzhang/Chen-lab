@@ -225,10 +225,7 @@ chr1    13838   rs28428499      C       T       192.67  .       AC=1;AF=0.500;AN
 # INFO: Information (附加的注释信息，以分号的key=value键值对，如深度、测序偏好等)
 # FILTER: Filter (过滤标志，通过为PASS，未通过则记录失败的代码，或用.表示未过滤)
 
-
-zcat S1.haplotypecaller.vcf.gz | sed -n '/CHROM/,$p' > S1.haplotypecaller_v1.vcf
-
-## select & filter SNPs
+## Select & filter SNPs
 /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk SelectVariants \
   -R /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta \
   -V S1.haplotypecaller.vcf.gz --select-type-to-include SNP -O S1.snps.vcf.gz
@@ -253,19 +250,113 @@ zcat S1.haplotypecaller.vcf.gz | sed -n '/CHROM/,$p' > S1.haplotypecaller_v1.vcf
   --filter-name "ReadPosRankSum-8" --filter-expression "ReadPosRankSum < -8.0" \
   -O S1.snps.filtered.vcf.gz
 
-/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk VariantFiltration \
-  -R /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta -V S1.snps.vcf.gz \
-  --filter-expression "QD < 2.0 || SOR > 3.0" --filter-name "my_filters" -O S1.snps.filtered.test.vcf.gz
-
-## !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!not work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-chr1    58211   rs2691335       A       G       231.06  .       AC=1;AF=0.500;AN=2;BaseQRankSum=0.126;DB;DP=10;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=25.00;MQRankSum=0.000;QD=23.11;ReadPosRankSum=-1.645;SOR=3.258  GT:AD:DP:GQ:PL  0/1:1,9:10:0:238,0,0
-
-
-## select $ filter INDELs
+## Select $ filter INDELs
 /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk SelectVariants \
   -R /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta \
   -V S1.haplotypecaller.vcf.gz --select-type-to-include INDEL -O S1.indels.vcf.gz
+
+/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk VariantFiltration \
+  -R /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta -V S1.indels.vcf.gz \
+  --filter-name "QD2" --filter-expression "QD < 2.0" \
+  --filter-name "QUAL30" --filter-expression "QUAL < 30.0" \
+  --filter-name "FS200" --filter-expression "FS > 200.0" \
+  --filter-name "SOR10" --filter-expression "SOR > 10.0" \
+  --filter-name "ReadPosRankSum-20" --filter-expression "ReadPosRankSum < -20.0" \
+  -O S1.indels.filtered.vcf.gz
+
+## Merge snp & indel
+/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk MergeVcfs \
+  -I S1.snps.filtered.vcf.gz -I S1.indels.filtered.vcf.gz -O S1.hardfiltered.vcf.gz
+
+/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk IndexFeatureFile \
+  -I S1.hardfiltered.vcf.gz
+
+## Retain high quality variants 
+# mamba install bioconda::bcftools
+bcftools view -f PASS S1.hardfiltered.vcf.gz -Oz -o S1.hardfiltered.PASS.vcf.gz
+bcftools index -t S1.hardfiltered.PASS.vcf.gz
+
+zcat S1.hardfiltered.PASS.vcf.gz | sed -n '/CHROM/,$p' | wc -l   # 4737726
+
+
+########## Filter low quality variants ###############
+./filter_variants.sh S1
+
+s=$1
+
+## Select & filter SNPs
+/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk SelectVariants \
+  -R /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta \
+  -V $s.haplotypecaller.vcf.gz --select-type-to-include SNP -O $s.snps.vcf.gz
+
+/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk VariantFiltration \
+  -R /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta -V $s.snps.vcf.gz \
+  --filter-name "QD2" --filter-expression "QD < 2.0" \
+  --filter-name "QUAL30" --filter-expression "QUAL < 30.0" \
+  --filter-name "FS60" --filter-expression "FS > 60.0" \
+  --filter-name "SOR3" --filter-expression "SOR > 3.0" \
+  --filter-name "MQ40" --filter-expression "MQ < 40.0" \
+  --filter-name "MQRankSum-12.5" --filter-expression "MQRankSum < -12.5" \
+  --filter-name "ReadPosRankSum-8" --filter-expression "ReadPosRankSum < -8.0" \
+  -O $s.snps.filtered.vcf.gz
+
+## Select $ filter INDELs
+/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk SelectVariants \
+  -R /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta \
+  -V $s.haplotypecaller.vcf.gz --select-type-to-include INDEL -O $s.indels.vcf.gz
+
+/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk VariantFiltration \
+  -R /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta -V $s.indels.vcf.gz \
+  --filter-name "QD2" --filter-expression "QD < 2.0" \
+  --filter-name "QUAL30" --filter-expression "QUAL < 30.0" \
+  --filter-name "FS200" --filter-expression "FS > 200.0" \
+  --filter-name "SOR10" --filter-expression "SOR > 10.0" \
+  --filter-name "ReadPosRankSum-20" --filter-expression "ReadPosRankSum < -20.0" \
+  -O $s.indels.filtered.vcf.gz
+
+## Merge snp & indel
+/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk MergeVcfs \
+  -I $s.snps.filtered.vcf.gz -I $s.indels.filtered.vcf.gz -O $s.hardfiltered.vcf.gz
+
+/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk IndexFeatureFile \
+  -I $s.hardfiltered.vcf.gz
+
+## Retain high quality variants 
+# mamba install bioconda::bcftools
+bcftools view -f PASS $s.hardfiltered.vcf.gz -Oz -o $s.hardfiltered.PASS.vcf.gz
+bcftools index -t $s.hardfiltered.PASS.vcf.gz
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
