@@ -201,6 +201,15 @@ Core Nextflow options
 ##INFO=<ID=ReadPosRankSum,Number=1,Type=Float,Description="Z-score from Wilcoxon rank sum test of Alt vs. Ref read position bias">
 ##INFO=<ID=SOR,Number=1,Type=Float,Description="Symmetric Odds Ratio of 2x2 contingency table to detect strand bias">
 
+# GT: 表示这个样本的基因型，对于一个二倍体生物，GT值表示的是这个样本在这个位点所携带的两个等位基因。0表示跟REF一样；1表示表示跟ALT一样；2表示第二个ALT。当只有一个ALT 等位基因的时候，0/0表示纯和且跟REF一致；0/1表示杂合，两个allele一个是ALT一个是REF；1/1表示纯和且都为ALT； The most common format subfield is GT (genotype) data. If the GT subfield is present, it must be the first subfield. In the sample data, genotype alleles are numeric: the REF allele is 0, the first ALT allele is 1, and so on. The allele separator is '/' for unphased genotypes and '|' for phased genotypes.
+#  0 - reference call
+#  1 - alternative call 1
+#  2 - alternative call 2
+#AD: 对应两个以逗号隔开的值，这两个值分别表示覆盖到REF和ALT碱基的reads数，相当于支持REF和支持ALT的测序深度。
+#DP: 覆盖到这个位点的总的reads数量，相当于这个位点的深度（并不是多有的reads数量，而是大概一定质量值要求的reads数）。
+#PL: 对应3个以逗号隔开的值，这三个值分别表示该位点基因型是0/0，0/1，1/1的没经过先验的标准化Phred-scaled似然值（L）。如果转换成支持该基因型概率（P）的话，由于L=-10lgP，那么P=10^（-L/10），因此，当L值为0时，P=10^0=1。因此，这个值越小，支持概率就越大，也就是说是这个基因型的可能性越大。
+#GQ:表示最可能的基因型的质量值。表示的意义同QUAL。
+
 
 #CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  P1_S1
 chr1    10144   .       T       C       66.64   .       AC=1;AF=0.500;AN=2;BaseQRankSum=0.000;DP=17;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=35.30;MQRankSum=0.439;QD=8.33;ReadPosRankSum=0.732;SOR=0.818       GT:AD:DP:GQ:PL  0/1:5,3:8:74:74,0,131
@@ -211,6 +220,55 @@ chr1    13613   .       T       A       56.64   .       AC=1;AF=0.500;AN=2;BaseQ
 chr1    13684   rs71260404      C       T       37.64   .       AC=1;AF=0.500;AN=2;BaseQRankSum=2.000;DB;DP=13;ExcessHet=0.0000;FS=3.090;MLEAC=1;MLEAF=0.500;MQ=23.50;MQRankSum=-1.855;QD=3.14;ReadPosRankSum=-0.794;SOR=2.494  GT:AD:DP:GQ:PL  0/1:9,3:12:45:45,0,222
 chr1    13813   .       T       G       51.64   .       AC=1;AF=0.500;AN=2;BaseQRankSum=-1.282;DP=8;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=23.14;MQRankSum=-0.854;QD=6.45;ReadPosRankSum=-1.006;SOR=0.368     GT:AD:DP:GQ:PL  0/1:5,3:8:59:59,0,95
 chr1    13838   rs28428499      C       T       192.67  .       AC=1;AF=0.500;AN=2;BaseQRankSum=1.221;DB;DP=9;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=23.02;MQRankSum=-2.200;QD=21.41;ReadPosRankSum=-0.549;SOR=2.093  GT:AD:DP:GQ:PL  0/1:2,7:9:12:200,0,12
+
+# QUAL: Quality (Phred标度的变异检出质量值，越高代表越可靠)
+# INFO: Information (附加的注释信息，以分号的key=value键值对，如深度、测序偏好等)
+# FILTER: Filter (过滤标志，通过为PASS，未通过则记录失败的代码，或用.表示未过滤)
+
+
+zcat S1.haplotypecaller.vcf.gz | sed -n '/CHROM/,$p' > S1.haplotypecaller_v1.vcf
+
+## select & filter SNPs
+/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk SelectVariants \
+  -R /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta \
+  -V S1.haplotypecaller.vcf.gz --select-type-to-include SNP -O S1.snps.vcf.gz
+
+# https://gatk.broadinstitute.org/hc/en-us/articles/360035890471-Hard-filtering-germline-short-variants?utm_source=chatgpt.com
+# QD: QualByDepth < 2.0
+# QUAL: Quality < 30.0
+# FS: FisherStrand > 60.0 (Phred-scaled probability that there is strand bias at the site)
+# SOR: StrandOddsRatio > 3.0
+# MQ: RMSMappingQuality < 40.0 (Root mean square mapping quality over all the reads at the site)
+# MQRankSum: MappingQualityRankSumTest < -12.5 (u-based z-approximation from the Rank Sum Test for mapping qualities)
+# ReadPosRankSum: ReadPosRankSumTest < -8.0 (u-based z-approximation from the Rank Sum Test for site position within reads)
+
+/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk VariantFiltration \
+  -R /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta -V S1.snps.vcf.gz \
+  --filter-name "QD2" --filter-expression "QD < 2.0" \
+  --filter-name "QUAL30" --filter-expression "QUAL < 30.0" \
+  --filter-name "FS60" --filter-expression "FS > 60.0" \
+  --filter-name "SOR3" --filter-expression "SOR > 3.0" \
+  --filter-name "MQ40" --filter-expression "MQ < 40.0" \
+  --filter-name "MQRankSum-12.5" --filter-expression "MQRankSum < -12.5" \
+  --filter-name "ReadPosRankSum-8" --filter-expression "ReadPosRankSum < -8.0" \
+  -O S1.snps.filtered.vcf.gz
+
+/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk VariantFiltration \
+  -R /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta -V S1.snps.vcf.gz \
+  --filter-expression "QD < 2.0 || SOR > 3.0" --filter-name "my_filters" -O S1.snps.filtered.test.vcf.gz
+
+## !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!not work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+chr1    58211   rs2691335       A       G       231.06  .       AC=1;AF=0.500;AN=2;BaseQRankSum=0.126;DB;DP=10;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=25.00;MQRankSum=0.000;QD=23.11;ReadPosRankSum=-1.645;SOR=3.258  GT:AD:DP:GQ:PL  0/1:1,9:10:0:238,0,0
+
+
+## select $ filter INDELs
+/sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/sarek_work/conda/env-5248aa78c21c0f1eacf339701d8ab6c4/bin/gatk SelectVariants \
+  -R /sibcb1/chenfeilab1/chenfei-lab/Luz/wgs/references/GRCh38/Homo_sapiens_assembly38.fasta \
+  -V S1.haplotypecaller.vcf.gz --select-type-to-include INDEL -O S1.indels.vcf.gz
+
+
+
 
 
 
