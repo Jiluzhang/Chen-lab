@@ -111,7 +111,7 @@ qsub -N luz_wgs_1 -q b1.q -l hostname=fnode009 -cwd sample_1.sh
 qsub -N luz_wgs_2 -q b1.q -l hostname=fnode009 -cwd sample_2.sh 
 qsub -N luz_wgs_3 -q b1.q -l hostname=fnode009 -cwd sample_3.sh
 qsub -N luz_wgs_4 -q b1.q -l hostname=fnode009 -cwd sample_4.sh   # 5339455
-qsub -N luz_wgs_5 -q b1.q -l hostname=fnode010 -cwd sample_5.sh   # 5339460
+qsub -N luz_wgs_5 -q b1.q -l hostname=fnode007 -cwd sample_5.sh   # 5339465
 
 
 Reference genome options
