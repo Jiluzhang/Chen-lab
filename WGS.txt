@@ -369,3 +369,26 @@ bcftools index -t $s.hardfiltered.PASS.vcf.gz
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
