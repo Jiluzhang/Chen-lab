@@ -1,0 +1,566 @@
+开票信息：
+单位名称：中国科学院分子细胞科学卓越创新中心
+统一社会信用代码：12100000MB1A18041D
+单位地址：上海市徐汇区岳阳路320号
+银行账号：458545000888
+开户银行：中国银行上海市建国西路支行
+
+收件地址及联系人信息：
+上海闵行区园美路227号A3栋（中科院闵行基地） 
+
+
+ARP系统
+账号同邮箱
+薪酬查看密码：57888282
+
+OA系统
+账号：luzhang.ji@sibcb.ac.cn
+密码：Luz*Iris*57888282
+
+复旦vpn账号
+账号：25111230014
+密码：HLmk!18225661828
+
+
+############################################ 复旦服务器 ###########################################
+ssh Watermelon@10.184.163.51
+ssh Watermelon@10.184.163.52
+57888282
+
+查看磁盘占用：df -h .
+
+咱们可以存放数据的路径有3个 自己在这些目录下 创建以自己id为名字的目录 
+  i.  /chenfeilab  我们组自己服务器的存储节点
+  ii. /gpfs/chenfeilab  (/work/chenfeilab) 结构平台集群存储阵列 高I/O性能 用于hot data(目前进行的分析项目) 
+  iii. /dataX/chenfeilab  结构平台集群存储阵列 低I/O性能 用于cold data(已经完成的分析项目 backup)
+**注意**: 因为我们的服务器挂在结构平台的登入节点上 所以用户家目录在/share/home/xxx下 家目录下绝对不可存放任何大型文件 仅可用于存放一些code以及你常用的较小的tools   
+
+
+/share/home/Watermelon   98T   83T   8.8T  91%  /share
+/chenfeilab              153T  150T  3.0T  99%  /chenfeilab
+/gpfs/chenfeilab         300T  281T   20T  94% /work  #######################
+/dataX/chenfeilab        100T   88T   13T  88% /dataX
+
+slurm
+Termius用于传输文件，不要用FileZilla
+
+结构平台计算节点 长时间任务 尽量slurm提交
+假设编写一个computing.slurm任务提交文件基本格式如下：
+
+#!/bin/bash
+#SBATCH--partition=gpu08 提交到GPU08队列
+#SBATCH--gres=gpu:1     ##此处使用一个GPU如需多个GPU就改数量
+#SBATCH--job-name=computing     ##程序名称，此处假设程序名称为computing
+#SBATCH--output=computing.out   ##程序输出信息，此处假设为computing.out
+#SBATCH--time=2-00:00:0         ##此处假设限制执行时间为2天
+#########加载程序运行环境
+module load computing         ##此处假设加载程序computing运行环境
+#########运行执行程序
+此处为执行程序。
+
+http://10.184.163.51:8777/
+R server
+#################################################################################################
+
+
+
+############################################ 中科院服务器 ###########################################
+ssh submit2.sibcb.ac.cn -l chenfei-lab
+IBuMG1tD
+
+SIBCB VPN
+wangshaoxuan  UYHq1xrc
+zhaoliting    7ITmDWfA
+
+time ./RNASEQ_STAR_Salmon_Spikein_Luz.sh /sibcb1/chenfeilab1/chenfei-lab/Luz/test_data sampleInfo.txt test_20260919 N hg38 featureCounts Y
+qsub -N rnaseq_luz -q b1.q -l hostname=fnode009 -cwd RNAseq.sh
+
+qlogin
+ssh 
+qstat -f
+Qdel
+
+key: 9171229410cd18ba1427577196d4fb80
+
+https://github.com/dyinboisry4u/SEQPIPE#rna-seq
+
+
+md5sum -c md5sum.txt
+
+
+queuename                      qtype resv/used/tot. load_avg arch          states
+---------------------------------------------------------------------------------
+b1.q@fnode006.sibcb.ac.cn      BI    0/10/30        14.13    lx-amd64      
+---------------------------------------------------------------------------------
+b1.q@fnode007.sibcb.ac.cn      BI    0/11/30        16.30    lx-amd64      
+---------------------------------------------------------------------------------
+b1.q@fnode008.sibcb.ac.cn      BI    0/1/30         0.10     lx-amd64      do
+---------------------------------------------------------------------------------
+b1.q@fnode009.sibcb.ac.cn      BI    0/27/30        8.15     lx-amd64      
+5319401 0.50500 QRLOGIN    chenfei-lab  r     09/20/2026 13:51:27     1        
+5319415 0.50500 rnaseq_luz chenfei-lab  r     09/20/2026 14:04:29     1        
+---------------------------------------------------------------------------------
+b1.q@fnode010.sibcb.ac.cn      BI    0/18/30        49.79    lx-amd64      
+---------------------------------------------------------------------------------
+b1.q@fnode013.sibcb.ac.cn      BI    0/7/30         31.32    lx-amd64      
+---------------------------------------------------------------------------------
+b1.q@fnode014.sibcb.ac.cn      BI    0/7/30         13.69    lx-amd64      
+---------------------------------------------------------------------------------
+b1.q@fnode015.sibcb.ac.cn      BI    0/24/30        51.35    lx-amd64      
+---------------------------------------------------------------------------------
+b1.q@snode042.sibcb.ac.cn      BI    0/19/30        16.45    lx-amd64      
+---------------------------------------------------------------------------------
+#################################################################################################
+
+
+
+中科院邮箱
+Name: luzhang.ji@sibcb.ac.cn
+Password: HLjiluzhang1002
+
+
+Web of Science
+Name: 779410241@qq.com
+Password: jiluzhang123*
+
+Adobe Illustrator
+Name: 779410241@qq.com
+Password: HLjlz57888282   need buy with fee
+tongji.edu.cn  use school account
+
+ChatGPT
+Name: 779410241@qq.com
+Password: jiluzhang123
+
+JCTR
+Account: Luz
+Password: HLjiluzhang1002
+E-mail: luz_jlz@qq.com
+
+第三届全国基因组信息学大会
+账号：779410241@qq.com
+密码：HLjiluzhang1002
+
+UKBiobank
+Username: TJ_Wanglab Password: Chenfeiwang123#
+
+家民老师服务器
+ssh u21509@logini.tongji.edu.cn -p 10022
+~qu%yg3ge6in
+
+
+wangd.ai
+账号：779410241@qq.com
+密码：HLjiluzhang1002
+
+Nature Genetics
+name:luzhji
+password:57888282
+
+用友系统
+账号：季鲁章
+密码：Ji@19941002
+
+IProX
+账号：jiluzhang
+密码：57888282
+邮箱：779410241@qq.com
+
+广西生信大会
+账号：jiluzhang@tongji.edu.cn
+密码：HLjiluzhang1002
+
+
+NGDC
+name: jiluzhang@tongji.edu.cn
+password: HL_jiluzhang1002
+
+Nature Methods
+name: luzji
+password: jiluzhang123
+
+Nature Intelligence Machine
+name: luji
+password: jiluzhang123
+
+
+基金资助
+National Natural Science Foundation of China (No. 32300429)
+the Postdoctoral Fellowship Program of CPSF (No. GZC20231945)
+the China Postdoctoral Science Foundation (No. 2024M762404)
+
+
+https://www.chinapostdoctor.org.cn/auth/login.html
+
+
+博后基金申请
+账号：jiluzhang
+密码：bsh_57888282
+
+
+同济大学工会
+https://ghhy.tongji.edu.cn/tjhyxt/admin/xuexiao/ssnjl
+
+同济大学邮箱
+用户名：jiluzhang@tongji.edu.cn
+密码：Luz_Iris57888282
+
+
+同济大学统一身份认证
+用户名：23310128
+密码：HLjiluzhang1002
+
+Illumina 账号：779410241@qq.com
+         密码：Jiluzhang_57888282
+
+wifi账号：*1011*
+    密码：Shirley_liu_lab
+
+打印机需连wifi：compbio-1011-1-5G
+
+Trello账号：779410241@qq.com
+      密码：578888282
+
+系里的cluster可以备用~
+ssh -p 22 cfwang@10.11.41.107
+WangLab@1011
+
+
+bjobs -u all  # display all jobs for all users
+
+## submit work with gpu
+# https://www.ibm.com/docs/zh/spectrum-lsf/10.1.0?topic=jobs-submitting-that-require-gpu-resources
+
+
+
+Mercury （剩余存储空间约10T）
+校内登录方式：ssh -p 6122 -o ServerAliveInterval=60 jiluzhang@10.10.196.55
+内网端口（搭建jupyter或webserver）：ssh -p 16666 -o ServerAliveInterval=60 jiluzhang@10.10.196.55
+校外登录方式：ssh -p 6122 -o ServerAliveInterval=60 jiluzhang@202.120.188.70
+密码：jiluzhang123 wanglab_jlz_57888282
+
+Venus （带2张显卡）
+校内登录方式：ssh -p 6122 -o ServerAliveInterval=60 jiluzhang@10.11.41.74
+密码：wanglab_jlz_57888282
+
+Saturn
+登录方式：ssh -p 6122 -o ServerAliveInterval=60 jiluzhang@10.11.41.108
+密码：wanglab_jlz_57888282
+
+
+免密登录
+ssh-keygen 
+ssh-copy-id -i id_rsa.pub -p 6122 jiluzhang@10.11.41.108
+ssh-copy-id -i id_rsa.pub -p 6122 jiluzhang@10.11.41.74
+ssh-copy-id -i id_rsa.pub -p 6122 jiluzhang@10.10.196.55
+
+软件安装目录：/data/home/jiluzhang (1.5T)
+软连接：ln -s /data/home/jiluzhang /fs/home/jiluzhang/softwares
+
+服务器存储互相访问
+Mercury: /mnt/Venus  /mnt/Saturn
+Venus: /mnt/Mercury  /mnt/Saturn
+Saturn: /mnt/Mercury  /mnt/Venus
+
+
+Jupyter notebook URL: 10.10.196.55:16666
+            Password: 57888282  wanglab_jlz_57888282
+
+
+
+Letpub
+账号：779410241@qq.com
+密码：57888282
+
+
+内网穿透
+## https://zhongce.sina.com.cn/article/view/39658/
+cd /bianlab/Luz/remote_connection
+
+nohup ./wyc_linux_64 -token=f2V2VESYLdrRUVNm &
+
+ssh -p 45945 -o ServerAliveInterval=30 cooltools@hkbhfonu.dongtaiyuming.net
+bianlab
+
+跳板机AnyDesk地址：142455934
+密码：bianlab123
+
+
+ssh jlz21@192.115.110.254    
+Bianlab_Luz_57888282
+
+
+ssh cooltools@192.115.110.243
+bianlab
+
+
+
+
+
+同济大学情报与咨询服务平台
+账号：13817927181
+密码：jiluzhang123
+
+同济大学生科院预聘助理教授申请
+网址：http://kh.tongji.edu.cn/rsfw/sys/zpglxt/index.do?customAppConfig=1#/grzx
+账号：13817927181
+密码：57888282
+
+
+github的账户信息如下:
+注册邮箱：bianlab@outlook.com
+outlook邮箱密码：q1w2e3r4t5
+github用户名：bianlab-hub
+github密码：bianlabAT115
+github链接：https://github.com/bianlab-hub/
+
+
+交大医学院VPN
+站点名：shsmu
+主机：vpn.shsmu.edu.cn
+用户名：019723910300
+密码：jpp3516694*
+
+Leetcode
+ID: jiluzhang
+Password: 57888282
+
+scontrol show node gpu08
+#NodeName=gpu08 Arch=x86_64 CoresPerSocket=10
+#   CPUAlloc=40 CPUErr=0 CPUTot=40 CPULoad=27.45
+#   AvailableFeatures=(null)
+#   ActiveFeatures=(null)
+#   Gres=gpu:4
+#   NodeAddr=gpu08 NodeHostName=gpu08 Version=17.11
+#   OS=Linux 3.10.0-693.2.2.el7.x86_64 #1 SMP Tue Sep 12 22:26:13 UTC 2017 
+#   RealMemory=257839 AllocMem=0 FreeMem=1114 Sockets=2 Boards=1
+#   State=ALLOCATED ThreadsPerCore=2 TmpDisk=212445 Weight=1 Owner=N/A MCS_label=N/A
+#   Partitions=gpu 
+#   BootTime=2022-08-23T21:07:18 SlurmdStartTime=2022-08-23T21:10:11
+#   CfgTRES=cpu=40,mem=257839M,billing=40,gres/gpu=4
+#   AllocTRES=cpu=40,gres/gpu=4
+#   CapWatts=n/a
+#   CurrentWatts=0 LowestJoules=0 ConsumedJoules=0
+#   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+
+小木虫
+ID: jlz_luz
+Password: 57888282
+
+
+docker desktop
+ID: jiluzhang  or  779410241@qq.com
+password: jiluzhang123
+
+Django administration
+ID: Luz
+password: jiluzhang123
+
+
+Nucleic Acids Research
+账号：luz_jlz@qq.com
+密码：jiluzhang123
+
+
+LYJ
+交大VPN账号：claralin
+密码：981020lyj
+
+分配给你们小组的服务器地址为202.120.40.136:25085,密码123Com
+使用教程如下：
+1. 请事先安装并登录上海交通大学VPN：https://net.sjtu.edu.cn/wlfw/VPN.htm
+2. 在浏览器打开“服务器地址+lab/?”,如202.120.40.136：12345/lab?
+3. 输入密码登入服务器
+
+jupyter password: 123Com
+
+
+
+Google
+ID: jiluzhang123@gmail.com
+密码：HLjiluzhang1002
+
+
+Anydesk
+ID：787096517
+密码：BianLab115
+
+
+2022年度表观遗传与染色质生物学大会
+账号：779410241@qq.com
+密码：57888282
+
+
+c713f2ca-aa82-48d1-853b-4ecda62aef2c   |  v.1.0     2022.03.01 00:16  quality check in progress
+c713f2ca-aa82-48d1-853b-4ecda62aef2c   |  v.1.1     2022.03.02 09:20  Amendment received
+                                                    2022.04.25        Reviewer reports received / Ready for editor's decision
+                                                    2022.04.25        Submission has been rejected
+
+
+
+5d504638-4527-421c-af95-6faa47176c25   |  v.1.0     2022.12.02  Technical check in progress
+                                                    2022.12.07  Editor appointed
+                                                    2022.12.08  1 Reviewer(s) accepted   Awaiting their report
+                                                    2022.12.08  2 Reviewer(s) accepted   Awaiting their report
+                                                    2022.12.15  1 Reviewer report received
+                                                    2022.12.18  Reviewer reports received / Ready for editor’s decision
+                                                    2022.12.20  Revision requested
+5d504638-4527-421c-af95-6faa47176c25   |  v.2.0     2023.02.12  Revision technical check in progress
+                                                    2023.02.15  Amendment requested
+5d504638-4527-421c-af95-6faa47176c25   |  v.2.1     2023.02.16  Amendment received
+                                                    2023.02.24  Amendment requested
+                                                    2023.02.24  Amendment received
+                                                    2023.02.28  Editor evaluating revision
+                                                    2023.03.01  2 Reviewer(s) invited
+                                                    2023.03.01  1 Reviewer(s) accepted  Awaiting their report
+                                                    2023.03.01  2 Reviewer(s) accepted  Awaiting their report
+                                                    2023.03.01  1 Reviewer report received
+                                                    2023.03.12  Reviewer reports received / Ready for editor’s decision
+                                                    2023.03.13  Revision requested
+5d504638-4527-421c-af95-6faa47176c25   |  v.3.0     2023.03.27  Revision technical check in progress
+                                                    2023.03.28  Editor evaluating revision
+                                                    2023.03.29  Submission has been accepted
+                                                    2023.03.30  Submission is in publishing and rights
+                                                    2023.03.31  Submission sent to production
+                                                    2023.04.05  Article published
+
+
+
+BMC Genomics
+账号：qianbian@shsmu.edu.cn
+密码：bianlab12345
+
+临床试验与伦理审查管理系统：172.16.30.17
+用户名：B21008
+密码：jiluzhang123
+
+Bian ORCiD: 0000-0001-7022-2213
+ORCiD: 0000-0002-3345-5533
+密码：jiluzhang123
+
+iScience
+账号：Bianlab
+密码：bianlab666
+
+2022.10.09  Submitted
+2022.10.18  Under Review
+2022.11.03  All Reviews Complete
+
+Genomics, Proteomics & Bioinformatics
+账号：Bianlab
+密码：bianlab666
+
+Submitted to Journal  2022.11.19 (Beijing 2022.11.20)
+With Editor           2022.11.30
+Reject                2022.12.01
+
+
+Science China Life Sciences
+
+URL：https://mc03.manuscriptcentral.com/scls
+账号：qianbian@shsmu.edu.cn
+密码：bianlab666
+
+发票抬头：上海交通大学医学院附属第九人民医院
+开户行：工行上海市斜桥支行
+账号：1001 2760 0901 4472 715
+单位地址：上海市黄浦区制造局路639号
+单位电话：021-23271699
+统一社会信用代码：123100004250265801
+
+
+医学院查询文献vpn：webvpn.shsmu.edu.cn
+账号：72300B21008
+密码：022275@9y
+
+国自然账号：779410241@qq.com
+password: HLjiluzhang1002
+
+
+上海市科技管理信息系统
+账号：13817927181
+密码：jiluzhang123
+
+九院OA系统： http://portal.2m9h.net/
+name: B21008
+password: jiluzhang123!
+
+Wifi name: JIAOTONG
+Password: qwert123
+
+
+## http://www.neiwangchuantou.cn/archives/8.html
+## wget -c https://down.xiaomy.net/linux/wyc_linux_64
+
+nohup ./wyc_linux_64 -token c4erl568 &
+#ELdv4qqcNsyFd1op
+ps -aux | grep wyc_linux
+
+ssh WU@192.115.121.150
+
+## head node
+## https://i.xiaomy.net/#/tunnel
+## 13817927181  57888282
+ssh -p 45945 jlz21@myssh.xiaomy.net
+
+ssh -p 45945 WU@myssh.xiaomy.net
+ssh -p 45945 WU@hkbhfonu.dongtaiyuming.net
+LxaRLkeuHzBUwVyx
+
+
+rm /Users/jiluzhang/.ssh/known_hosts
+rm -f /root/.ssh/known_hosts
+
+wyc_win_64.exe
+
+
+
+port: 22
+
+Submit job: http://hpc.pku.edu.cn/_book/guide/slurm/sbatch.html
+
+
+
+
+
+
+
+
+##################### salloc ######################
+# cp /work/leilab/dingyongbo2015/cistem/salloc ./
+./salloc --cpus-per-task 56 -w cpu10 -J HiC-Reg
+ssh cpu02
+scancel 51163
+
+sinfo
+# PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+# defq*        up   infinite      4  down* cpu[03-05,08]
+# defq*        up   infinite      5    mix cpu[02,07,09-11]
+# defq*        up   infinite      2  alloc cpu[01,06]
+# gpu          up 4-00:00:00      1  drain gpu11
+# gpu          up 4-00:00:00      6    mix gpu[06-10,12]
+
+salloc -p gpu -n 10 -w gpu06 --mem=250000
+
+
+
+vpn账号：
+https://stuvpn.fudan.edu.cn/
+16111510045
+QinH8843576
+
+服务器账号：
+ssh qhong@202.120.64.91
+75tpy45a
+
+
+闵行基地
+账号：CEMCS1  CEMCS2
+密码：Cemcs@2024
+
+Chen Lab ID: s657
+
+XB00625
+
+值班老师值班时间（后勤吴春涛老师隔壁）
+周二/周四：13:30-16:00
